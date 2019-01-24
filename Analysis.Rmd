@@ -6,7 +6,7 @@ output: html_document
 ---
 Read in CSV file 
 ```{r}
-#library(Biostrings)
+#library(Biostrings) could have used this but decided not to... good for future reference
 
 Seqs<-read.csv("Sequences.csv")
 
@@ -21,7 +21,7 @@ Seq2<-gsub("[^ATCG]","", Seqs$Bases[2])
 Seq3<-gsub("[^ATCG]","", Seqs$Bases[3])
 ```
 
-#Count number of bases for each sequence
+#Count number of bases for each sequence, and print each sequence
 
 ```{r}
 Seq1split <-strsplit(Seq1, "")[[1]]
@@ -97,3 +97,14 @@ Seq Names/ID | GC% |
 HQ433692.1 | 44.19%
 HQ433694.1 | 44.10%
 HQ433691.1 | 44.10%
+
+#Making a graph of GC_content.csv
+```{r}
+library(ggplot2)
+GCData<-read.csv("GC_content.csv", header=T)
+
+GCPer<-(GCData$G + GCData$C)
+
+qplot(x=Species,y=GCPer, data=GCData, geom = "point", xlab="Species", ylab="%GC content", main="GC% for each Species",fill=I("yellow"), colour=I("red"),
+      size=I(3),alpha=I(0.08))
+```
